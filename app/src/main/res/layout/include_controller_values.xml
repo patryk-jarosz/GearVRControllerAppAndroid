@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:paddingTop="60dp"
+    android:paddingLeft="20dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/include_controller_values_macaddress"
+        android:textSize="20dp"
+        android:textColor="#2B2B2B"
+        android:text="mac address: XX:XX:XX:XX:XX:XX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_connectionstatus"
+        android:textSize="20dp"
+        android:textColor="#2B2B2B"
+        android:text="status: idle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/include_controller_values_btn_connect"
+        android:text="connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:enabled="false"
+        android:id="@+id/include_controller_values_btn_disconnect"
+        android:text="disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/include_controller_values_touchpad"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="touchpad: x=0,y=0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_trigger"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="trigger: false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_back"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="back: false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_home"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="home: false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_volup"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="vol up: false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/include_controller_values_voldown"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="vol down: false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

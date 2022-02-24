@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:paddingTop="60dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="30sp"
+            android:text="Permissions:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txt_permission_status_bluetooth"
+            android:textSize="20sp"
+            android:text="Bluetooth: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txt_permission_status_location"
+            android:textSize="20sp"
+            android:text="Location: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="30sp"
+            android:text="Devices:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txt_scan_status"
+            android:textSize="20sp"
+            android:text="Status: Idle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="60dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/recycler_devices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/overlay_card_gattserver"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:rippleColor="#00EDEDED"
+        app:cardBackgroundColor="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="30dp"
+                android:text="With Selected Device:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--    BUTTONS -->
+            <Button
+                android:id="@+id/btn_get_gatt"
+                android:text="Get GATT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_discover_services"
+                android:text="Discover Services"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_request_mtu"
+                android:text="Request MTU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_action_single_read"
+                android:text="Action Single Read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_action_cmd_sensor"
+                android:text="CMD SENSOR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_action_cmd_vr"
+                android:text="DISCONNECT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include android:id="@+id/included_controller_values_linear" layout="@layout/include_controller_values" />
+<!--                <EditText-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:scrollHorizontally="true"-->
+<!--                    android:singleLine="false"-->
+<!--                    android:scrollbars="vertical"-->
+<!--                    android:id="@+id/status_overlay_edittext"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="14dp"-->
+<!--                    android:hint="idle"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"/>-->
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
