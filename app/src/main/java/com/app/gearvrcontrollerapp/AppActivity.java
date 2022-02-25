@@ -1,7 +1,15 @@
 package com.app.gearvrcontrollerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AppOpsManager;
+import android.app.Instrumentation;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -15,11 +23,19 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.LinearLayout;
+
+import com.app.gearvrcontrollerapp.New.ControllerInputManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +45,11 @@ import java.util.UUID;
 
 import static android.bluetooth.BluetoothDevice.TRANSPORT_LE;
 import static android.bluetooth.BluetoothGatt.GATT_SUCCESS;
+import static android.view.KeyEvent.KEYCODE_ALL_APPS;
+import static android.view.KeyEvent.KEYCODE_APP_SWITCH;
+import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_HOME;
+import static androidx.core.app.NotificationCompat.CATEGORY_SERVICE;
 
 public class AppActivity extends AppCompatActivity {
     boolean mNotYetNotifying = true;
@@ -45,6 +66,9 @@ public class AppActivity extends AppCompatActivity {
 
     private BluetoothGatt gatt;
 
+    private ControllerInputManager mControllerInputManager;
+    private Instrumentation mSystemInstrumentation;
+
     private void log(String message){ Log.v("AppActivity",message); }
 
     @Override
@@ -52,6 +76,30 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         mContext = this;
+
+        checkOverlayPermission();
+        stopService(new Intent(AppActivity.this, ControllerInputOverlayService.class));
+        BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+
+        };
+        IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
+        registerReceiver(mReceiver, filter);
+        showNotification();
+        Intent svc = new Intent(this, ControllerInputOverlayService.class);
+        startService(svc);
+
+        mSystemInstrumentation = new Instrumentation();
+        //startService();
+
+//        AppOpsManager appOpsManager = (AppOpsManager)mContext.getSystemService(Context.APP_OPS_SERVICE);
+//        appOpsManager.
+
+
         mControllerInputDisplay = new ControllerInputDisplay(mContext, findViewById(R.id.app_activity_included_controller_values));
         mControllerInputDisplay.setListener(new ControllerInputDisplay.ControllerInputDisplayListener() {
             @Override
@@ -63,6 +111,7 @@ public class AppActivity extends AppCompatActivity {
                 gatt.disconnect();
             }
         });
+        mControllerInputManager = new ControllerInputManager(mContext, createControllerInputManagerListener());
         //
         mControllerInputDisplay.onMacAddress(MAC_ADDRESS);
     }
@@ -244,17 +293,18 @@ public class AppActivity extends AppCompatActivity {
             @Override
             public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                 super.onCharacteristicChanged(gatt, characteristic);
-                log("onCharacteristicChanged: characteristic="+ Arrays.toString(characteristic.getValue()));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean triggerPressed = (characteristic.getValue()[58] & (1 << 0)) == 1;
-                        mControllerInputDisplay.onTrigger(triggerPressed);
-                        if(triggerPressed){
-                            incrementSystemVol(true);
-                        }
-                    }
-                });
+                //log("onCharacteristicChanged: characteristic="+ Arrays.toString(characteristic.getValue()));
+//                boolean triggerPressed = (characteristic.getValue()[58] & (1 << 0)) == 1;
+//                if(triggerPressed){
+//                    incrementSystemVol(true);
+//                }
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mControllerInputDisplay.onTrigger(triggerPressed);
+//                    }
+//                });
+                mControllerInputManager.onEventData(characteristic.getValue());
             }
 
 
@@ -266,8 +316,102 @@ public class AppActivity extends AppCompatActivity {
         };
     }
 
+    private void runShellCommand(String command) throws Exception {
+        Process process = Runtime.getRuntime().exec(command);
+        process.waitFor();
+    }
+
     private void incrementSystemVol(boolean up){
         AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         audioManager.adjustVolume(up?AudioManager.ADJUST_RAISE:AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
     }
+
+    private ControllerInputManager.ControllerInputManagerListener createControllerInputManagerListener(){
+        return new ControllerInputManager.ControllerInputManagerListener() {
+            @Override
+            public void onTouchpad(boolean isPressing, int posX, int posY) {
+
+            }
+
+            @Override
+            public void onClickTrigger() {
+
+            }
+
+            @Override
+            public void onClickBack() {
+                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_APP_SWITCH);
+            }
+
+            @Override
+            public void onClickHome() {
+                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_HOME);
+            }
+
+            @Override
+            public void onClickVolUp() {
+                incrementSystemVol(true);
+            }
+
+            @Override
+            public void onClickVolDown() {
+                incrementSystemVol(false);
+            }
+        };
+    }
+
+
+    /////////
+
+    // method to ask user to grant the Overlay permission
+    public void checkOverlayPermission(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                // send user to the device settings
+                Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                startActivity(myIntent);
+            }
+        }
+    }
+
+
+    /////////
+
+    private void showNotification(){
+
+        Intent intent = new Intent("android.intent.CLOSE_ACTIVITY");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0);
+
+
+        createNotificationChannel();
+//        PendingIntent pendingIntent =
+//                PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "Running")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Running")
+                .setContentText("Tap to terminate service")
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setOngoing(true)
+                .setChannelId("channel1");
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Running";
+            String description = "Shows an ongoing notification for ease of terminating service.";
+            int importance = NotificationManager.IMPORTANCE_NONE;
+            NotificationChannel channel = new NotificationChannel("channel1", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }

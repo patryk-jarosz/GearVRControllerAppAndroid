@@ -44,4 +44,5 @@ public class ControllerInputParser {
     private int parseAxisY(byte[] eventData){ return (((eventData[55] & 0x3) << 8) + ((eventData[56] & 0xFF) >> 0)) & 0x3FF; }
     private boolean isGoodBufferSize(String b){ return b.length() >= 3; }
 
+
 }
