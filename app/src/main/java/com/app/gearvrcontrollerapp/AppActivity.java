@@ -330,7 +330,11 @@ public class AppActivity extends AppCompatActivity {
         return new ControllerInputManager.ControllerInputManagerListener() {
             @Override
             public void onTouchpad(boolean isPressing, int posX, int posY) {
-
+                Intent intent = new Intent("your_action_name");
+                intent.putExtra("isPressing",isPressing);
+                intent.putExtra("posX",posX);
+                intent.putExtra("posY",posX);
+                sendBroadcast(intent);
             }
 
             @Override
@@ -340,7 +344,7 @@ public class AppActivity extends AppCompatActivity {
 
             @Override
             public void onClickBack() {
-                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_APP_SWITCH);
+                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_BACK);
             }
 
             @Override

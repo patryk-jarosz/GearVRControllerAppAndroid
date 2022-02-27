@@ -11,17 +11,14 @@
     android:fitsSystemWindows="false">
 
     <FrameLayout
-        android:padding="10dp"
-        android:background="#66000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_gravity="center_vertical"
-            android:background="#212121"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:id="@+id/imgview_cursor"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_mouse_pointer"/>
 
     </FrameLayout>
 

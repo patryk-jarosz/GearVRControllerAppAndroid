@@ -33,9 +33,14 @@ public class ControllerInputManager {
         //  NEW STATE JUST RECEIVED
         ControllerInputStateObject mReceivedStateObj = new ControllerInputStateObject(eventData);
         /** COMPARE AND HANDLE EVENTS - START  **/
-        //  todo: TOUCHPAD
         //  TRIGGER
-        if(shouldOnClick(currentStateObj.isPressingTrigger,mReceivedStateObj.isPressingTrigger)){ mListener.onClickTrigger(); }
+        boolean mTouchpadShouldClick = shouldOnClick(currentStateObj.isPressingTrigger,mReceivedStateObj.isPressingTrigger);
+        //  TOUCHPAD
+        if(mReceivedStateObj.touchpadPosX == 0  && mReceivedStateObj.touchpadPosY == 0){
+            //NOT TOUCHING
+        }else{
+            mListener.onTouchpad(mTouchpadShouldClick,mReceivedStateObj.touchpadPosX,mReceivedStateObj.touchpadPosY);
+        }
         //  BACK
         if(shouldOnClick(currentStateObj.isPressingBack,mReceivedStateObj.isPressingBack)){ mListener.onClickBack(); }
         //  HOME
