@@ -344,22 +344,34 @@ public class AppActivity extends AppCompatActivity {
 
             @Override
             public void onClickBack() {
-                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_BACK);
+                //mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_BACK);
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onClickBack",true);
+                sendBroadcast(intent);
             }
 
             @Override
             public void onClickHome() {
-                mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_HOME);
+                //mSystemInstrumentation.sendKeyDownUpSync(KEYCODE_HOME);
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onClickHome",true);
+                sendBroadcast(intent);
             }
 
             @Override
             public void onClickVolUp() {
-                incrementSystemVol(true);
+                //incrementSystemVol(true);
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onClickVolUp",true);
+                sendBroadcast(intent);
             }
 
             @Override
             public void onClickVolDown() {
-                incrementSystemVol(false);
+                //incrementSystemVol(false);
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onClickVolDown",true);
+                sendBroadcast(intent);
             }
         };
     }

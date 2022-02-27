@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GearVRControllerApp</string>
+
+    <string name="accessibility_service_description">accessibility_service_descriptionLabel</string>
 </resources>

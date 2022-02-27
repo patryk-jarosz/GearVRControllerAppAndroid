@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.app.gearvrcontrollerapp.AppActivity"
+    android:canPerformGestures="true"
+    android:accessibilityFeedbackType="feedbackAllMask"
+
+    android:description="@string/accessibility_service_description"
+    android:accessibilityEventTypes="typeAllMask"
+    android:canRequestFilterKeyEvents="true"
+    android:accessibilityFlags="flagDefault"
+
+    android:notificationTimeout="100"
+    android:canRetrieveWindowContent="true"
+    />
