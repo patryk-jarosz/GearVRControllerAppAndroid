@@ -329,12 +329,20 @@ public class AppActivity extends AppCompatActivity {
     private ControllerInputManager.ControllerInputManagerListener createControllerInputManagerListener(){
         return new ControllerInputManager.ControllerInputManagerListener() {
             @Override
-            public void onTouchpad(boolean isPressing, int posX, int posY) {
+            public void onTouchpad(boolean shouldClick, int posX, int posY) {
                 Intent intent = new Intent("your_action_name");
-                intent.putExtra("isPressing",isPressing);
+                intent.putExtra("shouldClick",shouldClick);
                 intent.putExtra("posX",posX);
-                intent.putExtra("posY",posX);
+                intent.putExtra("posY",posY);
                 sendBroadcast(intent);
+
+                Intent intent2 = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent2.putExtra("touchpadPosX",posX);
+                intent2.putExtra("touchpadPosY",posY);
+                intent2.putExtra("onClickTouchpad",shouldClick);
+                sendBroadcast(intent2);
+
+
             }
 
             @Override

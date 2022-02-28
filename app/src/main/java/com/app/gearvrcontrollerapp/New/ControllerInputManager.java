@@ -56,7 +56,7 @@ public class ControllerInputManager {
 
     /** DETERMINE IF SHOULD PERFORM CLICK   **/
     public interface ControllerInputManagerListener{
-        void onTouchpad(boolean isPressing, int posX, int posY);//todo: change to separate isPressing -> onClickTouchpad.
+        void onTouchpad(boolean shouldClick, int posX, int posY);//todo: change to separate isPressing -> onClickTouchpad.
         void onClickTrigger();
         void onClickBack();
         void onClickHome();
@@ -89,13 +89,18 @@ public class ControllerInputManager {
 
         /** UPDATE EVENT DATA   **/
         public void updateEventData(byte[] eventData){
+
+            //const axisX = (((eventData[54] & 0xF) << 6) + ((eventData[55] & 0xFC) >> 2)) & 0x3FF;
+            //const axisX = (((eventData[54] & 0xF) << 6) + ((eventData[55] & 0xFC) >> 2)) & 0x3FF;
+            //const axisY = (((eventData[55] & 0x3) << 8) + ((eventData[56] & 0xFF) >> 0)) & 0x3FF;
+            //const axisY = (((eventData[55] & 0x3) << 8) + ((eventData[56] & 0xFF) >> 0)) & 0x3FF;
             /*  UPDATE VALUES   */
             //  TOUCHPAD X
             touchpadPosX = (((eventData[54] & 0xF) << 6) + ((eventData[55] & 0xFC) >> 2)) & 0x3FF;
             //  TOUCHPAD Y
-            touchpadPosY = (((eventData[55] & 0x3) << 8) + ((eventData[56] & 0xFF) >> 0)) & 0x3FF;
+            touchpadPosY = (((eventData[55] & 0x3) << 8) + ((eventData[56] & 0xFF))) & 0x3FF;
             //  TRIGGER - PRESSED
-            isPressingTrigger = (eventData[58] & (1 << 0)) != 0;
+            isPressingTrigger = (eventData[58] & (1)) != 0;
             //  HOME - PRESSED
             isPressingHome = (eventData[58] & (1 << 1)) != 0;
             //  BACK - PRESSED

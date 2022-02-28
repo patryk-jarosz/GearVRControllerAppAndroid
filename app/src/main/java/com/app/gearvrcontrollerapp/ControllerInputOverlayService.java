@@ -121,6 +121,8 @@ public class ControllerInputOverlayService extends Service {
     int maxHeight = 0;
     public void setCursorPos(int x, int y){
 
+        Log.v("setCursorPos","x,y="+x+","+y);
+
         float percentageX = x / 315f;
         float percentageY = y / 315f;
 
