@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.Path;
 import android.media.AudioManager;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -18,22 +19,14 @@ import android.view.accessibility.AccessibilityEvent;
 import androidx.annotation.RequiresApi;
 
 public class ControllerAccessibilityService extends AccessibilityService {
-
-    boolean mIsInitialEvent = true;
-
-
-    int maxWidth=0, maxHeight=0;
+    int
+            maxWidth = 0,
+            maxHeight = 0;
 
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         Log.v("ControllerAccessiblServ","onAccessibilityEvent!");
-//        dispatchGesture()
-//        if(mIsInitialEvent){
-//            mIsInitialEvent=false;
-//            performGlobalAction(GLOBAL_ACTION_RECENTS);
-//            Log.v("ControllerAccessiblServ","mIsInitialEvent!");
-//        }
     }
 
     @Override
@@ -45,36 +38,19 @@ public class ControllerAccessibilityService extends AccessibilityService {
         //super.onServiceConnected();
         registerReceiver();
 
-        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        Display display = window.getDefaultDisplay();
-        maxWidth = display.getWidth();
-        maxHeight = display.getHeight();
+//        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+//        Display display = window.getDefaultDisplay();
+//        maxWidth = display.getWidth();
+//        maxHeight = display.getHeight();
 
-//        // Set the type of events that this service wants to listen to. Others
-//        // won't be passed to this service.
-//        info.eventTypes = AccessibilityEvent.TYPE_VIEW_CLICKED |
-//                AccessibilityEvent.TYPE_VIEW_FOCUSED;
-//
-//        // If you only want this service to work with specific applications, set their
-//        // package names here. Otherwise, when the service is activated, it will listen
-//        // to events from all applications.
-//        info.packageNames = new String[]
-//                {"com.example.android.myFirstApp", "com.example.android.mySecondApp"};
-//
-//        // Set the type of feedback your service will provide.
-//        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN;
-//
-//        // Default services are invoked only if no package-specific ones are present
-//        // for the type of AccessibilityEvent generated. This service *is*
-//        // application-specific, so the flag isn't necessary. If this was a
-//        // general-purpose service, it would be worth considering setting the
-//        // DEFAULT flag.
-//
-//        // info.flags = AccessibilityServiceInfo.DEFAULT;
-//
-//        info.notificationTimeout = 100;
-//
-//        this.setServiceInfo(info);
+//        DisplayMetrics displaymetrics = new DisplayMetrics();
+//        this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//        int screenWidth = displaymetrics.widthPixels;
+//        int screenHeight = displaymetrics.heightPixels;
+
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        maxWidth = metrics.widthPixels;
+        maxHeight = metrics.heightPixels;
     }
 
     /** REGISTER RECEIVER   **/
@@ -161,18 +137,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
         // callback: can be null if you don't care about gesture termination
         boolean result = dispatchGesture(createClick(x, y), createClickCallback(), null);
         Log.d("TAG", "Gesture dispatched? " + result);
-//        Path swipePath = new Path();
-//        swipePath.moveTo(x, y);
-//        swipePath.lineTo(x, y);
-//        GestureDescription.Builder gestureBuilder = new GestureDescription.Builder();
-//        gestureBuilder.addStroke(new GestureDescription.StrokeDescription(swipePath, 0, 50));
-//        dispatchGesture(gestureBuilder.build(), null, null);
     }
-
-
-
-
-
 
     // (x, y) in screen coordinates
     @RequiresApi(api = Build.VERSION_CODES.N)

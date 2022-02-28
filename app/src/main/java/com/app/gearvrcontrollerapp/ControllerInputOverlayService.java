@@ -126,25 +126,6 @@ public class ControllerInputOverlayService extends Service {
         float percentageX = x / 315f;
         float percentageY = y / 315f;
 
-//        if(mPrevPosX > x){
-//            // move left
-//            mCurrentPosX--;
-//        }else{
-//            //move right
-//            mCurrentPosX++;
-//        }
-//        if(mPrevPosY > y){
-//            //move down
-//            mCurrentPosY++;
-//        }else{
-//            //move up
-//            mCurrentPosY--;
-//        }
-//        mPrevPosX = x;
-//        mPrevPosY = y;
-//
-//        mCurrentPosY = 0;
-
         mCurrentPosX = (int) (maxWidth * percentageX);
         mCurrentPosY = (int) (maxHeight * percentageY);
 

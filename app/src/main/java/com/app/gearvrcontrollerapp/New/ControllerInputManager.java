@@ -21,8 +21,6 @@ public class ControllerInputManager {
         this.mListener = mListener;
         this.currentStateObj = new ControllerInputStateObject();
         DURATION_LONG_PRESS = getLongPressTimeout();
-
-
     }
 
     /** ON EVENT DATA RECEIVED  **/
