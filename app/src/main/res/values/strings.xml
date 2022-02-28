@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">GearVRControllerApp</string>
+    <string name="app_name">GearVR Mouse</string>
 
-    <string name="accessibility_service_description">accessibility_service_descriptionLabel</string>
+    <string name="accessibility_service_title">GearVR Mouse</string>
+    <string name="accessibility_service_description">This app requires an accessibility service in order to pass controller events to the device.\n \nGearVR Controller Mouse app will NOT collect any user data or monitor any actions of users.</string>
 </resources>
