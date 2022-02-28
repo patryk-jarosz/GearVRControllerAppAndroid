@@ -3,19 +3,27 @@ package com.app.gearvrcontrollerapp;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Path;
+import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.ImageView;
 
+import androidx.annotation.IntRange;
 import androidx.annotation.RequiresApi;
 
 public class ControllerAccessibilityService extends AccessibilityService {
@@ -37,6 +45,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     protected void onServiceConnected() {
         //super.onServiceConnected();
         registerReceiver();
+        setupOverlayCursor();
 
 //        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 //        Display display = window.getDefaultDisplay();
@@ -50,7 +59,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
         maxWidth = metrics.widthPixels;
-        maxHeight = metrics.heightPixels;
+        maxHeight = metrics.heightPixels + getStatusBarHeight();
     }
 
     /** REGISTER RECEIVER   **/
@@ -82,6 +91,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
                     Log.v("TAG","actionTouchpadClick");
                     actionTouchpadClick(mPosX,mPosY);
                 }
+
+                actionTouchpadXY(mPosX,mPosY);
+
 //                int mPosX = arg1.getExtras().getInt("posX");
 //                int mPosY = arg1.getExtras().getInt("posY");
 
@@ -125,18 +137,57 @@ public class ControllerAccessibilityService extends AccessibilityService {
     private void actionTouchpadClick(int x, int y){
         Log.v("TAG","actionTouchpadClick:xy="+x+","+y);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            x = x/315 * maxWidth;
-            y = y/315 * maxHeight;
+//            x = x/315 * maxWidth;
+//            y = y/315 * maxHeight;
             actionTap(x,y);
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    //@RequiresApi(api = Build.VERSION_CODES.N)
+    @SuppressLint("NewApi")
     private void actionTap(int x, int y){
-        // accessibilityService: contains a reference to an accessibility service
-        // callback: can be null if you don't care about gesture termination
-        boolean result = dispatchGesture(createClick(x, y), createClickCallback(), null);
-        Log.d("TAG", "Gesture dispatched? " + result);
+        if(!(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)){
+            return;
+        }
+
+
+//        Path swipePath = new Path();
+////        swipePath.moveTo(1000, 1000);
+////        swipePath.lineTo(100, 1000);
+//
+//        swipePath.moveTo(x,y);
+//
+//        GestureDescription.Builder gestureBuilder = new GestureDescription.Builder();
+//        gestureBuilder.addStroke(new GestureDescription.StrokeDescription(swipePath, 0, 1));
+//        dispatchGesture(gestureBuilder.build(), null, null);
+
+        float percentageX = x / 315f;
+        float percentageY = y / 315f;
+
+        int mCurrentPosX = (int) (maxWidth * percentageX);
+        int mCurrentPosY = (int) (maxHeight * percentageY);
+
+        dispatchGesture(createClick(mCurrentPosX,mCurrentPosY),null,null);
+    }
+
+    /**
+     * Create a description of a click gesture
+     *
+     * @param x The x coordinate to click. Must not be negative.
+     * @param y The y coordinate to click. Must not be negative.
+     *
+     * @return A description of a click at (x, y)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static GestureDescription createClick(@IntRange(from = 0) int x,
+                                                 @IntRange(from = 0) int y) {
+
+        Path clickPath = new Path();
+        clickPath.moveTo(x, y);
+        clickPath.lineTo(x + 1, y);
+        GestureDescription.Builder gestureBuilder = new GestureDescription.Builder();
+        gestureBuilder.addStroke(new GestureDescription.StrokeDescription(clickPath, 0, ViewConfiguration.getTapTimeout()));
+        return gestureBuilder.build();
     }
 
     // (x, y) in screen coordinates
@@ -147,7 +198,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         Path clickPath = new Path();
         clickPath.moveTo(x, y);
-        GestureDescription.StrokeDescription clickStroke = new GestureDescription.StrokeDescription(clickPath, 0, DURATION);
+        GestureDescription.StrokeDescription clickStroke = new GestureDescription.StrokeDescription(clickPath, 10L, 200L);
         GestureDescription.Builder clickBuilder = new GestureDescription.Builder();
         clickBuilder.addStroke(clickStroke);
         return clickBuilder.build();
@@ -169,5 +220,72 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 Log.d("TAG", "gesture cancelled");
             }
         };
+    }
+
+
+    private void setupOverlayCursor(){
+
+        int flagType;
+
+        //check api type
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            flagType = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;//TYPE_APPLICATION_OVERLAY
+        }else{
+            flagType = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
+        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Display display = window.getDefaultDisplay();
+        maxWidth = display.getWidth();
+        maxHeight = display.getHeight()+getStatusBarHeight();
+
+
+        WindowManager.LayoutParams overlayparams;
+        overlayparams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                flagType,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,// | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                PixelFormat.TRANSLUCENT);
+        //overlayparams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        overlayparams.x = 0;
+        overlayparams.y = 0;
+
+
+
+        LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.system_overlay,null);
+        mCursor = view.findViewById(R.id.imgview_cursor);
+
+        //windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        window.addView(view, overlayparams);
+
+        //listenForMouseCursorPos();
+    }
+    private ImageView mCursor;
+
+    private void actionTouchpadXY(int x, int y){
+//        x = (x/315) * maxWidth;
+//        y = (y/315) * maxHeight;
+//        mCursor.animate().x(x).y(y).setDuration(0).start();
+
+        float percentageX = x / 315f;
+        float percentageY = y / 315f;
+
+        int mCurrentPosX = (int) (maxWidth * percentageX);
+        int mCurrentPosY = (int) (maxHeight * percentageY);
+
+        mCursor.animate().x(mCurrentPosX).y(mCurrentPosY).setDuration(0).start();
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

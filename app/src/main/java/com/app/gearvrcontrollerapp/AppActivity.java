@@ -91,7 +91,7 @@ public class AppActivity extends AppCompatActivity {
         registerReceiver(mReceiver, filter);
         showNotification();
         Intent svc = new Intent(this, ControllerInputOverlayService.class);
-        startService(svc);
+        //startService(svc);
 
         mSystemInstrumentation = new Instrumentation();
         //startService();

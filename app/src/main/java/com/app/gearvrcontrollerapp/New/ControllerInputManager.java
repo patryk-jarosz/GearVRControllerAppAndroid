@@ -32,7 +32,7 @@ public class ControllerInputManager {
         ControllerInputStateObject mReceivedStateObj = new ControllerInputStateObject(eventData);
         /** COMPARE AND HANDLE EVENTS - START  **/
         //  TRIGGER
-        boolean mTouchpadShouldClick = shouldOnClick(currentStateObj.isPressingTrigger,mReceivedStateObj.isPressingTrigger);
+        boolean mTouchpadShouldClick = shouldOnClick(currentStateObj.isPressingTouchpad,mReceivedStateObj.isPressingTouchpad);
         //  TOUCHPAD
         if(mReceivedStateObj.touchpadPosX == 0  && mReceivedStateObj.touchpadPosY == 0){
             //NOT TOUCHING

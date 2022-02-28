@@ -73,14 +73,14 @@ public class ControllerInputOverlayService extends Service {
         LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.system_overlay,null);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //Toast.makeText(ControllerInputOverlayService.this, "t", Toast.LENGTH_SHORT).show();
-                Log.v("TAG","TOUCHING!");
-                return false;
-            }
-        });
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                //Toast.makeText(ControllerInputOverlayService.this, "t", Toast.LENGTH_SHORT).show();
+//                Log.v("TAG","TOUCHING!");
+//                return false;
+//            }
+//        });
         mCursor = view.findViewById(R.id.imgview_cursor);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
