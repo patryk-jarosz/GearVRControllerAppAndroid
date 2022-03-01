@@ -2,7 +2,6 @@
 <accessibility-service
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:settingsActivity="com.app.gearvrcontrollerapp.AppActivity"
 
     android:description="@string/accessibility_service_description"
     tools:targetApi="n"
@@ -15,4 +14,7 @@
     android:notificationTimeout="100"
     android:canRetrieveWindowContent="true"
     android:canRequestFilterKeyEvents="true"
+
+    android:settingsActivity="com.app.gearvrcontrollerapp.MainActivity2"
+
     />
