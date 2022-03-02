@@ -31,6 +31,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
             maxWidth = 0,
             maxHeight = 0;
 
+    int[] mCursorPosDownXY = new int[]{ 0,0 };
+    boolean mCursorIsDown = false;
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -59,7 +62,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
         maxWidth = metrics.widthPixels;
-        maxHeight = metrics.heightPixels + getStatusBarHeight();
+        maxHeight = metrics.heightPixels + getStatusBarHeight() + getNavigationBarHeight();
     }
 
     /** REGISTER RECEIVER   **/
@@ -229,7 +232,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         //check api type
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            flagType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;//TYPE_ACCESSIBILITY_OVERLAY
+            flagType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;//.TYPE_APPLICATION_OVERLAY;//TYPE_ACCESSIBILITY_OVERLAY
         }else{
             flagType = WindowManager.LayoutParams.TYPE_PHONE;
         }
@@ -245,7 +248,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 flagType,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,// | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,// | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
                 PixelFormat.TRANSLUCENT);
         //overlayparams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         overlayparams.x = 0;
@@ -265,19 +270,55 @@ public class ControllerAccessibilityService extends AccessibilityService {
         //listenForMouseCursorPos();
     }
     private ImageView mCursor;
+    private static final int INDEX_X = 0;
+    private static final int INDEX_Y = 1;
 
     private void actionTouchpadXY(int x, int y){
-//        x = (x/315) * maxWidth;
-//        y = (y/315) * maxHeight;
-//        mCursor.animate().x(x).y(y).setDuration(0).start();
+        //mCursorPosDownXY
+        //mCursorIsDown
+        boolean mIsDownNow = !(x == 0 && y == 0);
+        boolean mJustReleased = mCursorIsDown && !mIsDownNow;
+        boolean mJustDown = !mCursorIsDown && mIsDownNow;
+        boolean mNotTouching = !mCursorIsDown && !mIsDownNow;
 
-        float percentageX = x / 315f;
-        float percentageY = y / 315f;
+        int mPosToSetX;
+        int mPosToSetY;
 
+
+        if(mNotTouching){
+            //  NOT TOUCHING
+            mPosToSetX = mCursorPosDownXY[INDEX_X];
+            mPosToSetY = mCursorPosDownXY[INDEX_Y];
+        }
+        else if(mJustDown){
+            //  JUST DOWN
+            mCursorIsDown = true;
+//            mCursorPosDownXY[INDEX_X] = x;
+//            mCursorPosDownXY[INDEX_Y] = y;
+            mPosToSetX = mCursorPosDownXY[INDEX_X];
+            mPosToSetY = mCursorPosDownXY[INDEX_Y];
+        }else if(mJustReleased){
+            //  JUST RELEASED
+            mCursorIsDown = false;
+            mCursorPosDownXY[INDEX_X] = mCursorPosDownXY[INDEX_X] + calcPosToSet(mCursorPosDownXY[INDEX_X],x);
+            mCursorPosDownXY[INDEX_Y] = mCursorPosDownXY[INDEX_Y] + calcPosToSet(mCursorPosDownXY[INDEX_Y],y);
+            mPosToSetX = mCursorPosDownXY[INDEX_X];
+            mPosToSetY = mCursorPosDownXY[INDEX_Y];
+        }else{
+            //  STILL DOWN, MOVING
+            mCursorIsDown = true;
+            mPosToSetX = mCursorPosDownXY[INDEX_X] + calcPosToSet(mCursorPosDownXY[INDEX_X],x);
+            mPosToSetY = mCursorPosDownXY[INDEX_Y] + calcPosToSet(mCursorPosDownXY[INDEX_Y],y);
+        }
+
+        float percentageX = mPosToSetX / 315f;
+        float percentageY = mPosToSetY / 315f;
         int mCurrentPosX = (int) (maxWidth * percentageX);
         int mCurrentPosY = (int) (maxHeight * percentageY);
-
-        mCursor.animate().x(mCurrentPosX).y(mCurrentPosY).setDuration(0).start();
+        //mCursor.animate().x(mCurrentPosX).y(mCurrentPosY).setDuration(10).start();
+        mCursor.setX(mCurrentPosX);
+        mCursor.setY(mCurrentPosY-getStatusBarHeight());
+        mCursorIsDown = mIsDownNow;
     }
 
     public int getStatusBarHeight() {
@@ -288,4 +329,25 @@ public class ControllerAccessibilityService extends AccessibilityService {
         }
         return result;
     }
+    public int getNavigationBarHeight(){
+        int result = 0;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
+    private int calcPosToSet(int posStart, int posNow){
+        int mResult = 0;
+
+        if(posStart > posNow){
+            mResult = posStart - posNow;
+        }else{
+            mResult = posNow - posStart;
+        }
+        return mResult;
+    }
+
 }
