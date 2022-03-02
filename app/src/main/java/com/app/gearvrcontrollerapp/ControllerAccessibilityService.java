@@ -22,6 +22,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.RequiresApi;
@@ -78,6 +79,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 int mPosX = arg1.getExtras().getInt("touchpadPosX");
                 int mPosY = arg1.getExtras().getInt("touchpadPosY");
 
+                boolean mLongPressedHome = arg1.getExtras().getBoolean("onLongClickHome");
+                boolean mLongPressedBack = arg1.getExtras().getBoolean("onLongClickBack");
+
                 if(mDoBack){
                     actionBack();
                 }
@@ -93,6 +97,14 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 if(mDoTouchpadClick){
                     Log.v("TAG","actionTouchpadClick");
                     actionTouchpadClick(mPosX,mPosY);
+                }
+
+                if(mLongPressedHome){
+                    Log.v("TAG","mLongPressedHome="+mLongPressedHome);
+                    actionLongClickHome();
+                }
+                if(mLongPressedBack){
+                    actionLongClickBack();
                 }
 
                 actionTouchpadXY(mPosX,mPosY);
@@ -348,6 +360,14 @@ public class ControllerAccessibilityService extends AccessibilityService {
             mResult = posNow - posStart;
         }
         return mResult;
+    }
+
+    private void actionLongClickHome(){
+        Log.v("TAG","shouldOnLongClick()");
+        performGlobalAction(GLOBAL_ACTION_RECENTS);
+    }
+    private void actionLongClickBack(){
+        performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS);
     }
 
 }

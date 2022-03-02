@@ -1,6 +1,7 @@
 package com.app.gearvrcontrollerapp.New;
 
 import android.content.Context;
+import android.util.Log;
 
 import static android.view.ViewConfiguration.getLongPressTimeout;
 
@@ -14,6 +15,9 @@ public class ControllerInputManager {
 
     private int DURATION_LONG_PRESS = 500;
     private int DURATION_LONG_PRESS_INTERVAL = 500;
+
+    private long startTimePressingHome = 0;
+    private long startTimePressingBack = 0;
 
 
     public ControllerInputManager(Context mContext, ControllerInputManagerListener mListener){
@@ -30,6 +34,17 @@ public class ControllerInputManager {
         lastEventTimestamp = System.currentTimeMillis();
         //  NEW STATE JUST RECEIVED
         ControllerInputStateObject mReceivedStateObj = new ControllerInputStateObject(eventData);
+        /** CHECKING LONG PRESS **/
+        if(!currentStateObj.isPressingHome && mReceivedStateObj.isPressingHome){
+            //  NOW NEED TO STORE TIMESTAMP
+            startTimePressingHome = System.currentTimeMillis();
+        }
+        if(!currentStateObj.isPressingBack && mReceivedStateObj.isPressingBack){
+            //  NOW NEED TO STORE TIMESTAMP
+            startTimePressingBack = System.currentTimeMillis();
+        }
+
+
         /** COMPARE AND HANDLE EVENTS - START  **/
         //  TRIGGER
         boolean mTouchpadShouldClick = shouldOnClick(currentStateObj.isPressingTouchpad,mReceivedStateObj.isPressingTouchpad);
@@ -40,9 +55,24 @@ public class ControllerInputManager {
             mListener.onTouchpad(mTouchpadShouldClick,mReceivedStateObj.touchpadPosX,mReceivedStateObj.touchpadPosY);
         }
         //  BACK
-        if(shouldOnClick(currentStateObj.isPressingBack,mReceivedStateObj.isPressingBack)){ mListener.onClickBack(); }
+        if(shouldOnClick(currentStateObj.isPressingBack,mReceivedStateObj.isPressingBack)){
+            //  CHECK IF WAS LONG CLICKED
+            if(shouldOnLongClick(startTimePressingBack,mReceivedStateObj.timestampState)){
+                mListener.onLongClickBack();
+            }else{
+                mListener.onClickBack();
+            }
+        }
         //  HOME
-        if(shouldOnClick(currentStateObj.isPressingHome,mReceivedStateObj.isPressingHome)){ mListener.onClickHome(); }
+        if(shouldOnClick(currentStateObj.isPressingHome,mReceivedStateObj.isPressingHome)){
+            //  CHECK IF WAS LONG CLICKED
+            if(shouldOnLongClick(startTimePressingHome,mReceivedStateObj.timestampState)){
+                mListener.onLongClickHome();
+                Log.v("TAG","mListener.onLongClickHome()");
+            }else{
+                mListener.onClickHome();
+            }
+        }
         //  VOL UP
         if(shouldOnClick(currentStateObj.isPressingVolUp,mReceivedStateObj.isPressingVolUp)){ mListener.onClickVolUp(); }
         //  VOL DOWN
@@ -60,6 +90,9 @@ public class ControllerInputManager {
         void onClickHome();
         void onClickVolUp();
         void onClickVolDown();
+
+        void onLongClickHome();
+        void onLongClickBack();
     }
 
     /** TRACK ALREADY PRESSING  **/
@@ -75,6 +108,7 @@ public class ControllerInputManager {
         public boolean isPressingVolUp = false;
         public boolean isPressingVolDown = false;
 
+        //public long startTimePressingHome = 0;
 
         /** CONSTRUCTORS    **/
         public ControllerInputStateObject(){
@@ -87,6 +121,8 @@ public class ControllerInputManager {
 
         /** UPDATE EVENT DATA   **/
         public void updateEventData(byte[] eventData){
+
+            boolean mWasPressingHome = isPressingHome;
 
             //const axisX = (((eventData[54] & 0xF) << 6) + ((eventData[55] & 0xFC) >> 2)) & 0x3FF;
             //const axisX = (((eventData[54] & 0xF) << 6) + ((eventData[55] & 0xFC) >> 2)) & 0x3FF;
@@ -111,9 +147,21 @@ public class ControllerInputManager {
             isPressingVolDown = (eventData[58] & (1 << 5)) != 0;
             /*  UPDATE TIMESTAMP   */
             timestampState = System.currentTimeMillis();
+
+            /*  UPDATE TIMESTAMPS FOR PRESSING BEGAN (if applicable to this event)    */
+            //if(!mWasPressingHome && isPressingHome){ startTimePressingHome = timestampState; }
         }
     }
 
     /** SHOULD ON_CLICK **/
     private boolean shouldOnClick(boolean wasPressing, boolean stillPressing){ return wasPressing && !stillPressing; }
+
+
+    /** SHOULD ON_LONG_CLICK    **/
+    private boolean shouldOnLongClick(long startTime, long endTime){
+        Log.v("TAG","shouldOnLongClick="+(endTime - startTime >= DURATION_LONG_PRESS));
+        Log.v("TAG","shouldOnLongClick,endTime="+endTime);
+        Log.v("TAG","shouldOnLongClick,startTime="+startTime);
+        return (endTime - startTime >= DURATION_LONG_PRESS);
+    }
 }

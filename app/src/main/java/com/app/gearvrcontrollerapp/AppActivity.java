@@ -381,6 +381,20 @@ public class AppActivity extends AppCompatActivity {
                 intent.putExtra("onClickVolDown",true);
                 sendBroadcast(intent);
             }
+
+            @Override
+            public void onLongClickHome() {
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onLongClickHome",true);
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void onLongClickBack() {
+                Intent intent = new Intent("INTENT_FILTER_ACTION_FROM_ACTIVITY_TO_ACCESSIBILITY");
+                intent.putExtra("onLongClickBack",true);
+                sendBroadcast(intent);
+            }
         };
     }
 
