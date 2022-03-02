@@ -229,7 +229,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         //check api type
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            flagType = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;//TYPE_APPLICATION_OVERLAY
+            flagType = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;//TYPE_ACCESSIBILITY_OVERLAY
         }else{
             flagType = WindowManager.LayoutParams.TYPE_PHONE;
         }

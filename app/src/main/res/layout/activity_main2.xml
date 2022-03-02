@@ -1,73 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
+        android:fitsSystemWindows="true"
+        android:background="#000000"
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <!-- In CollapsingToolbarLayout sompe important attributes are:
+         i)  app:layout_scrollFlags which is used to specify how collapsing
+             layout behaves when content is scrolled.I have used
+             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+             so it will scroll until it's is completely collapsed.
+         ii) app:contentScrim="@color/green" that specifies the color
+              of the collapsed toolbar -->
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/purple_700"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="@string/app_name">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="650dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_foreground"
+            <!--We are adding the image that we have added earlier
+                  in the drawable folder.The attribute app:layout_collapseMode="parallax"
+                  causes the image to move when user scrolls at a specific ratio. -->
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="280dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:src="@drawable/ic_launcher_foreground"-->
+<!--                app:layout_collapseMode="parallax" />-->
+
+            <LinearLayout
+                android:id="@+id/lineartop"
+                android:gravity="center"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:layout_gravity="center"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+                android:layout_height="280dp">
+
+                <TextView
+                    android:fontFamily="@font/roboto_light"
+                    android:textColor="#FAFAFA"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="40sp"
+                    android:text="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto_light"
+                    android:textColor="#9C9C9C"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="Settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+<!--            &lt;!&ndash; The attribute app:layout_collapseMode="pin" is set so that-->
+<!--                 sticks to the top when the user scrolls the view up&ndash;&gt;-->
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                app:layout_collapseMode="pin"-->
+<!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />-->
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!--Now add the NestedScollView-->
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="#000000"
+        app:cardCornerRadius="0dp"
+        app:shapeAppearanceOverlay="@style/AppTopBarShapeAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:cardElevation="1dp"
+        >
+
+        <LinearLayout
+            app:contentScrim="#e2e2e2"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:fontFamily="@font/roboto_regular"
+                android:id="@+id/txttoolbar"
+                android:textColor="#FAFAFA"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="19sp"
+                android:text="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+        android:background="#000000"
+        android:paddingTop="55dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/appBarLayout"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-
-        <!--In textview we will be adding the text that i have
-            added earlier in strings.xml file.This is simply the
-            the content to be scrolled -->
-        <TextView
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="8sp"
-            android:padding="16dp"
-            android:text="@string/content"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="30dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/app_surface_color"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
