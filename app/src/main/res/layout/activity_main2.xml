@@ -131,11 +131,41 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.card.MaterialCardView
+                android:clickable="true"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="2dp"
                 app:cardBackgroundColor="@color/app_surface_color"
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="#FAFAFA"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="19sp"
+                        android:text="Buttons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="#9C9C9C"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="Customize Click Actions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
 
             </com.google.android.material.card.MaterialCardView>
 
