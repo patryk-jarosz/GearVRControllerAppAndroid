@@ -48,15 +48,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="280dp">
 
+                <ImageView
+                    android:layout_marginBottom="-100dp"
+                    android:src="@mipmap/gearvrcontroller_nologo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"/>
+
                 <TextView
+                    android:background="@drawable/gradient_background_black"
                     android:fontFamily="@font/roboto_light"
                     android:textColor="#FAFAFA"
                     android:layout_gravity="center"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textSize="40sp"
                     android:text="@string/app_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="100dp"/>
                 <TextView
                     android:visibility="gone"
                     android:fontFamily="@font/roboto_light"
