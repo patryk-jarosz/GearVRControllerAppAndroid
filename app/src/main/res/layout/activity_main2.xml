@@ -7,42 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:fitsSystemWindows="true"
+    android:id="@+id/activitymain2_coordinatorlayout_parent"
     >
 
     <com.google.android.material.appbar.AppBarLayout
+        android:stateListAnimator="@drawable/appbar_remove_elevation"
         android:fitsSystemWindows="true"
-        android:background="#000000"
+        android:background="#00000000"
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <!-- In CollapsingToolbarLayout sompe important attributes are:
-         i)  app:layout_scrollFlags which is used to specify how collapsing
-             layout behaves when content is scrolled.I have used
-             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-             so it will scroll until it's is completely collapsed.
-         ii) app:contentScrim="@color/green" that specifies the color
-              of the collapsed toolbar -->
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:fitsSystemWindows="true"
+            app:statusBarScrim="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
-
-            <!--We are adding the image that we have added earlier
-                  in the drawable folder.The attribute app:layout_collapseMode="parallax"
-                  causes the image to move when user scrolls at a specific ratio. -->
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="280dp"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:src="@drawable/ic_launcher_foreground"-->
-<!--                app:layout_collapseMode="parallax" />-->
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
                 android:id="@+id/lineartop"
                 android:gravity="center"
                 app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier=".5"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -55,11 +43,12 @@
                     android:layout_height="200dp"/>
 
                 <TextView
+                    android:id="@+id/lineartop_txt"
                     android:background="@drawable/gradient_background_black"
                     android:fontFamily="@font/roboto_light"
                     android:textColor="#FAFAFA"
                     android:layout_gravity="center"
-                    android:gravity="bottom"
+                    android:gravity="bottom|center_horizontal"
                     android:textSize="40sp"
                     android:text="@string/app_name"
                     android:layout_width="wrap_content"
@@ -92,13 +81,14 @@
     <!--Now add the NestedScollView-->
 
     <com.google.android.material.card.MaterialCardView
-        app:cardBackgroundColor="#000000"
+        app:cardBackgroundColor="#00000000"
+        android:elevation="1dp"
         app:cardCornerRadius="0dp"
         app:shapeAppearanceOverlay="@style/AppTopBarShapeAppearance"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:cardElevation="1dp"
+        app:cardElevation="0dp"
         >
 
         <LinearLayout
@@ -125,7 +115,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.core.widget.NestedScrollView
-        android:background="#000000"
+        android:background="#00000000"
         android:paddingTop="55dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
