@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--    ICON    -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/comp_oneui_category_icon"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="25dp"
+        android:layout_height="25dp"/>
+    <!--    TEXT CONTAINER    -->
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--    TITLE   -->
+        <TextView
+            android:id="@+id/comp_oneui_category_title"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="#FAFAFA"
+            android:layout_gravity="left"
+            android:textSize="19sp"
+            android:text="Buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <!--    DESCRIPTION   -->
+        <TextView
+            android:id="@+id/comp_oneui_category_description"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="#9C9C9C"
+            android:layout_gravity="left"
+            android:textSize="14sp"
+            android:text="Customize Click Actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

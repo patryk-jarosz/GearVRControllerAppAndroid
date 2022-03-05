@@ -8,16 +8,21 @@ import androidx.core.view.VelocityTrackerCompat;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity2 extends AppCompatActivity {
     private AppBarLayout mAppBarLayout;
@@ -33,7 +38,11 @@ public class MainActivity2 extends AppCompatActivity {
 
     private OneUIAppBarHelper mOneUIAppBarHelper;
 
+    private MaterialCardView mCardParent;
 
+    private LinearLayout mLinearParentRoot;
+
+    private OneUICompCategoryView mBtnConnect,mBtnDisconnect;
 
 
     @Override
@@ -41,9 +50,32 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+
+        mBtnConnect = findViewById(R.id.activitymain2_oneuicompcategoryview_connect);
+        mBtnDisconnect = findViewById(R.id.activitymain2_oneuicompcategoryview_disconnect);
+
+        mBtnConnect.setOneUICompCategoryViewListener(new OneUICompCategoryView.OneUICompCategoryViewListener() {
+            @Override
+            public void onClick(OneUICompCategoryView OneUICompCategoryView) {
+
+            }
+        });
+        mBtnDisconnect.setOneUICompCategoryViewListener(new OneUICompCategoryView.OneUICompCategoryViewListener() {
+            @Override
+            public void onClick(OneUICompCategoryView OneUICompCategoryView) {
+
+            }
+        });
 
         //final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(mToolbar);
+
+        mLinearParentRoot = findViewById(R.id.activitymain2_linear_parent_root);
+
+        mCardParent = findViewById(R.id.activitymain2_card_parent);
 
         mParent = findViewById(R.id.activitymain2_coordinatorlayout_parent);
         mLinearTop = findViewById(R.id.lineartop);
@@ -90,12 +122,24 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void onThemeChange(){
         //  RE-APPLY ALL COLORS
-        mParent.setBackgroundColor(getColorBackground());
+        mParent.setBackgroundColor(Color.TRANSPARENT);//getColorBackground()
 
         mTxtLinearTop.setTextColor(getColorText());
         mTxtLinearTop.setBackground(getGradientColorBackground());
 
         mTxtToolbar.setTextColor(getColorText());
+
+        mCardParent.setCardBackgroundColor(getColorBackground());
+        mLinearParentRoot.setBackgroundColor(getColorBackground());
+
+        mBtnConnect.onThemeChange();
+        mBtnDisconnect.onThemeChange();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int mStatusBar = (!isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : 0;
+            int mNavBar = (!isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR : 0;
+            getWindow().getDecorView().setSystemUiVisibility(mStatusBar|mNavBar);
+        }
     }
 
     private int getColorBackground(){
@@ -115,4 +159,7 @@ public class MainActivity2 extends AppCompatActivity {
         int[] colors = {Color.TRANSPARENT,getColorBackground()};
         return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
     }
+
+
+
 }

@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
+    android:id="@+id/activitymain2_linear_parent_root"
+    android:background="#000000"
+    >
+
+
+<com.google.android.material.card.MaterialCardView
+    android:layout_weight="1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="25dp"
+    android:clipChildren="true"
+    android:id="@+id/activitymain2_card_parent"
+    app:cardBackgroundColor="#010101"
+    >
+
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -66,14 +97,6 @@
 
             </LinearLayout>
 
-<!--            &lt;!&ndash; The attribute app:layout_collapseMode="pin" is set so that-->
-<!--                 sticks to the top when the user scrolls the view up&ndash;&gt;-->
-<!--            <androidx.appcompat.widget.Toolbar-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                app:layout_collapseMode="pin"-->
-<!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />-->
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -121,52 +144,98 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.card.MaterialCardView
-                android:clickable="true"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/app_surface_color"
+
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:id="@+id/activitymain2_oneuicompcategoryview_connect"
+                app:compCategoryViewTitleText="Connect"
+                app:compCategoryViewDescriptionText="Connect to Controller"
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="#FAFAFA"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="19sp"
-                        android:text="Buttons"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                    <TextView
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="#9C9C9C"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textSize="14sp"
-                        android:text="Customize Click Actions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                android:id="@+id/activitymain2_oneuicompcategoryview_disconnect"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
-
-            </com.google.android.material.card.MaterialCardView>
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                android:layout_marginTop="10dp"
+                app:compCategoryViewTitleText="Disconnect"
+                app:compCategoryViewDescriptionText="Disconnect from Controller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_weight="1"
+        android:paddingBottom="56dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:text="text"/>
+
+    </LinearLayout>
+</LinearLayout>

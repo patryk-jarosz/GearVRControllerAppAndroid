@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="OneUICompCategoryView">
+        <attr name="compCategoryViewIconRes" format="integer" />
+        <attr name="compCategoryViewTitleText" format="string" />
+        <attr name="compCategoryViewDescriptionText" format="string"/>
+    </declare-styleable>
+</resources>
