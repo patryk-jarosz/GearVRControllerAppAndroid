@@ -36,6 +36,7 @@ import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
 import com.app.gearvrcontrollerapp.New.ControllerInputManager;
+import com.app.gearvrcontrollerapp.Utils.AppBluetoothUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +69,8 @@ public class AppActivity extends AppCompatActivity {
 
     private ControllerInputManager mControllerInputManager;
     private Instrumentation mSystemInstrumentation;
+
+    private AppBluetoothUtil mAppBluetoothUtil;
 
     private void log(String message){ Log.v("AppActivity",message); }
 
@@ -120,6 +123,10 @@ public class AppActivity extends AppCompatActivity {
         mControllerInputManager = new ControllerInputManager(mContext, createControllerInputManagerListener());
         //
         mControllerInputDisplay.onMacAddress(MAC_ADDRESS);
+        //
+        //
+
+        mAppBluetoothUtil = new AppBluetoothUtil(mContext);
     }
 
     private static final String MAC_ADDRESS = "2C:BA:BA:2F:6C:8E";
