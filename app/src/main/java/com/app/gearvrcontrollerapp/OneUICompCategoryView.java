@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -24,6 +25,7 @@ public class OneUICompCategoryView extends MaterialCardView {
 
     private ImageView mImgIcon;
     private TextView mTxtTitle,mTxtDescription;
+    private LinearLayout mLinearParent;
 
     private OneUICompCategoryViewListener mListener;
 
@@ -35,7 +37,7 @@ public class OneUICompCategoryView extends MaterialCardView {
         if(mAttrs != null){
             mTypedArray = mContext.getTheme().obtainStyledAttributes(mAttrs, R.styleable.OneUICompCategoryView, 0, 0);
             if(mTypedArray.hasValue(R.styleable.OneUICompCategoryView_compCategoryViewIconRes)){
-                mResIcon = mTypedArray.getInteger(R.styleable.OneUICompCategoryView_compCategoryViewIconRes,R.mipmap.ic_launcher);
+                mResIcon = mTypedArray.getResourceId(R.styleable.OneUICompCategoryView_compCategoryViewIconRes,R.drawable.vec_icon_permissions_accessibility_error);
             }
             if(mTypedArray.hasValue(R.styleable.OneUICompCategoryView_compCategoryViewTitleText)){
                 mStrTitle = mTypedArray.getString(R.styleable.OneUICompCategoryView_compCategoryViewTitleText);
@@ -50,6 +52,8 @@ public class OneUICompCategoryView extends MaterialCardView {
         mTxtTitle = this.findViewById(R.id.comp_oneui_category_title);
         mTxtDescription = this.findViewById(R.id.comp_oneui_category_description);
 
+        mLinearParent = this.findViewById(R.id.comp_oneui_category_linear_parent);
+
         //
         if(mResIcon != 0){
             mImgIcon.setImageResource(mResIcon);
@@ -61,13 +65,16 @@ public class OneUICompCategoryView extends MaterialCardView {
         this.setElevation(0);
         this.setCardElevation(0);
         this.setCardBackgroundColor(getResources().getColor(R.color.app_surface_color));
-        this.setRadius(getResources().getDimension(R.dimen.compOneUICardRadius));
+        //this.setCardBackgroundColor(Color.TRANSPARENT);
+        //this.setRadius(getResources().getDimension(R.dimen.compOneUICardRadius));
+        this.setRadius(0);
 
         onThemeChange();
 
         if(mStrDescription.isEmpty()){
             mTxtDescription.setVisibility(GONE);
         }
+
     }
 
 
@@ -122,5 +129,11 @@ public class OneUICompCategoryView extends MaterialCardView {
         return (AppApplication)((Activity) mContext).getApplication();
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        //super.setEnabled(enabled);
+        mLinearParent.setAlpha( (enabled) ? 1f : .5f );
+        this.setClickable(enabled);
+    }
 }
 

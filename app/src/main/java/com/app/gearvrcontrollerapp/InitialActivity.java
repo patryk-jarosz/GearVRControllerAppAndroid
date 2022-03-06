@@ -88,8 +88,8 @@ public class InitialActivity extends AppCompatActivity {
         mCardContentWrapper0.setCardBackgroundColor(getAppApplication().getColorSurface());
         mCardContentWrapper1.setCardBackgroundColor(getAppApplication().getColorSurface());
 
-        mCardDivider0.setCardBackgroundColor(getAppApplication().getColorSubText());
-        mCardDivider1.setCardBackgroundColor(getAppApplication().getColorSubText());
+        mCardDivider0.setCardBackgroundColor(getAppApplication().getColorOnBackground());
+        mCardDivider1.setCardBackgroundColor(getAppApplication().getColorOnBackground());
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

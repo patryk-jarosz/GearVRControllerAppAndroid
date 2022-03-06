@@ -9,4 +9,8 @@
 
 
     <dimen name="appBorderRadius">25dp</dimen>
+
+    <dimen name="compOneUIcollapsedTitleLinearSpaceTop">80dp</dimen>
+    <dimen name="compOneUIcollapsedTitleLinearSpaceBottom">25dp</dimen>
+    <dimen name="compOneUInestedScrollViewCardWrapperSpaceTop">5dp</dimen>
 </resources>

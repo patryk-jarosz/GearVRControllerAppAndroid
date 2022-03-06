@@ -24,6 +24,9 @@ public class AppApplication extends Application {
     public int getColorSubText(){
         return (isDarkMode()) ? Color.parseColor("#6A6A6A") : Color.parseColor("#919191");
     }
+    public int getColorOnBackground(){
+        return (isDarkMode()) ? Color.parseColor("#343434") : Color.parseColor("#E6E6E6");
+    }
 
     public boolean isDarkMode(){
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {

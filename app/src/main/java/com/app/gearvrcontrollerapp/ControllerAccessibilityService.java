@@ -35,6 +35,8 @@ public class ControllerAccessibilityService extends AccessibilityService {
     int[] mCursorPosDownXY = new int[]{ 0,0 };
     boolean mCursorIsDown = false;
 
+    private CursorState mCursorState;
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -64,6 +66,8 @@ public class ControllerAccessibilityService extends AccessibilityService {
         DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
         maxWidth = metrics.widthPixels;
         maxHeight = metrics.heightPixels + getStatusBarHeight() + getNavigationBarHeight();
+
+        mCursorState = new CursorState( new int[]{ maxWidth, maxHeight }   );
     }
 
     /** REGISTER RECEIVER   **/
@@ -368,6 +372,38 @@ public class ControllerAccessibilityService extends AccessibilityService {
     }
     private void actionLongClickBack(){
         performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS);
+    }
+
+
+
+
+
+    class CursorState{
+        private int[] screenWH = new int[]{0,0};
+        private int[] posXYDown = new int[]{0,0};
+        private int[] posXYCurrent = new int[]{0,0};
+
+        public CursorState(int[] screenWH){
+            this.screenWH = screenWH;
+        }
+
+        public void onTouchDown(int[] posXYDown){
+            this.posXYDown = posXYDown;
+        }
+        public void onTouchMove(int[] posXYMove){
+
+        }
+        public void onTouchUp(int[] posXYUp){
+
+        }
+
+        public int[] getScreenPosXY(){
+//            int[] mResult = new int[]{
+//                    posXYCurrent[0],
+//                    posXYCurrent[1]
+//            };
+            return new int[]{};
+        }
     }
 
 }
