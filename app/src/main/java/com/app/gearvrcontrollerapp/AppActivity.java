@@ -78,8 +78,10 @@ public class AppActivity extends AppCompatActivity {
         mContext = this;
 
         //  START INITIAL ACTIVITY
-        Intent myIntent = new Intent(this, InitialActivity.class);
-        startActivity(myIntent);
+        //Intent myIntent = new Intent(this, InitialActivity.class);
+        //startActivity(myIntent);
+        //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        //startActivity(intent);
 
         checkOverlayPermission();
         stopService(new Intent(AppActivity.this, ControllerInputOverlayService.class));
