@@ -41,4 +41,153 @@
         <item name="cornerSize">50%</item>
     </style>
 
+
+    <style name="listItemWithIconDivider" parent="">
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">#6A6A6A</item>
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="listItemGroupWrapper" parent="">
+        <item name="cardElevation">0dp</item>
+        <item name="android:clipChildren">true</item>
+        <item name="cardBackgroundColor">@color/app_surface_color</item>
+        <item name="cardCornerRadius">@dimen/appBorderRadius</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <!--    ONE UI - LINEAR PARENT  -->
+    <style name="oneui.linearParent" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">#F2F2F2</item>
+        <item name="android:weightSum">2</item>
+    </style>
+    <!--    ONE UI - WRAPPER CARD  -->
+    <style name="oneui.wrapperCard" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+
+        <item name="android:clipChildren">true</item>
+        <item name="android:layout_weight">2</item>
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+        <item name="cardCornerRadius">@dimen/appBorderRadius</item>
+
+        <item name="cardElevation">0dp</item>
+    </style>
+    <!--    ONE UI - COORDINATOR LAYOUT    -->
+    <style name="oneui.coordinatorLayout" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!--    ONE UI - COLLAPSING TOOL BAR LAYOUT    -->
+    <style name="oneui.collapsingToolbarLayout" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
+        <item name="statusBarScrim">@android:color/transparent</item>
+    </style>
+    <!--    ONE UI - COLLAPSING TOOL BAR LAYOUT -> INNER LINEAR CONTENT    -->
+    <style name="oneui.collapsingToolbarLayoutInnerLinearContent" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">280dp</item>
+
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="layout_collapseMode">parallax</item>
+        <item name="layout_collapseParallaxMultiplier">.5</item>
+    </style>
+
+    <!--    ONE UI - COLLAPSED LINEAR TOOLBAR   -->
+    <style name="oneui.expandedLinearToolbarTitle" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textColor">#FAFAFA</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+    <!--    ONE UI - APP BAR LAYOUT    -->
+    <style name="oneui.appBarLayout" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:stateListAnimator">@drawable/appbar_remove_elevation</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+
+    <!--    ONE UI - COLLAPSED LINEAR TOOLBAR   -->
+    <style name="oneui.collapsedLinearToolbar" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:elevation">1dp</item>
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+        <item name="android:paddingTop">44dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="contentScrim">@android:color/transparent</item>
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!--    ONE UI - COLLAPSED LINEAR TOOLBAR   -->
+    <style name="oneui.collapsedLinearToolbarTitle" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">#FAFAFA</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+    <!--    ONE UI - NESTED SCROLLVIEW - WRAPPER    -->
+    <style name="oneui.nestedScrollViewCardWrapper" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+<!--        <item name="cardBackgroundColor">#212121</item>-->
+
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+
+
+        <item name="android:clipChildren">true</item>
+        <item name="android:layout_weight">2</item>
+        <item name="cardCornerRadius">@dimen/appBorderRadius</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_marginTop">86dp</item>
+    </style>
+    <!--    ONE UI - NESTED SCROLLVIEW    -->
+    <style name="oneui.nestedScrollView" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+
+        <item name="android:overScrollMode">never</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+    </style>
+
+    <!--    ONE UI - NESTED SCROLLVIEW -> INNER LINEAR CONTENT    -->
+    <style name="oneui.nestedScrollViewInnerLinearContent" parent="">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">100dp</item>
+    </style>
+
 </resources>

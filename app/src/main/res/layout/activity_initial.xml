@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/activity_initial_linear_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".InitialActivity"
+    style="@style/oneui.linearParent">
+
+    <!--    COLLAPSING LAYOUT - WRAPPER   -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/activity_initial_card_parent"
+        style="@style/oneui.wrapperCard">
+        <!--    COORDINATOR LAYOUT  -->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            style="@style/oneui.coordinatorLayout">
+            <!--    APP BAR LAYOUT  -->
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/activity_initial_appbarlayout"
+                style="@style/oneui.appBarLayout">
+                <!--    COLLAPSING TOOLBAR LAYOUT  -->
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    style="@style/oneui.collapsingToolbarLayout">
+                    <LinearLayout
+                        android:id="@+id/activity_initial_linear_expanded"
+                        style="@style/oneui.collapsingToolbarLayoutInnerLinearContent">
+                        <!--    INNER LINEAR CONTENT HERE  -->
+                        <ImageView
+                            android:layout_marginBottom="-100dp"
+                            android:src="@mipmap/gearvrcontroller_nologo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"/>
+
+                        <TextView
+                            android:id="@+id/activity_initial_text_expanded_title"
+                            style="@style/oneui.expandedLinearToolbarTitle"
+                            android:text="@string/app_name"
+
+                            android:layout_height="100dp"
+                            android:gravity="bottom|center_horizontal"
+                            android:background="@drawable/gradient_background_black"
+                            />
+                    </LinearLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--    COLLAPSED TOOLBAR LINEAR  -->
+            <LinearLayout
+                android:id="@+id/activity_initial_linear_collapsed"
+                style="@style/oneui.collapsedLinearToolbar">
+                <!--    CONTENT HERE (collapsed toolbar)  -->
+                <TextView
+                    android:id="@+id/activity_initial_text_collapsed_title"
+                    style="@style/oneui.collapsedLinearToolbarTitle"
+                    android:text="@string/app_name"/>
+
+            </LinearLayout>
+
+            <!--    NESTED SCROLLVIEW - WRAPPER  -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/oneui.nestedScrollViewCardWrapper">
+                <!--    NESTED SCROLLVIEW  -->
+                <androidx.core.widget.NestedScrollView
+                    style="@style/oneui.nestedScrollView">
+                    <LinearLayout
+                        style="@style/oneui.nestedScrollViewInnerLinearContent">
+                        <!--    INNER LINEAR CONTENT HERE  -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/activity_initial_content_card_wrapper_0"
+                            style="@style/listItemGroupWrapper">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                                    app:compCategoryViewTitleText="Pair Device"
+                                    app:compCategoryViewDescriptionText=""
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/activity_initial_content_card_wrapper_1"
+                            style="@style/listItemGroupWrapper">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                                    app:compCategoryViewTitleText="Cursor"
+                                    app:compCategoryViewDescriptionText="Color • Sensitivity"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                                <com.google.android.material.card.MaterialCardView android:id="@+id/activity_initial_content_card_divider_0" style="@style/listItemWithIconDivider"/>
+
+                                <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                                    app:compCategoryViewTitleText="Buttons"
+                                    app:compCategoryViewDescriptionText="Actions"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                                <com.google.android.material.card.MaterialCardView android:id="@+id/activity_initial_content_card_divider_1" style="@style/listItemWithIconDivider"/>
+
+                                <com.app.gearvrcontrollerapp.OneUICompCategoryView
+                                    app:compCategoryViewTitleText="Extra"
+                                    app:compCategoryViewDescriptionText="Click Sound • Haptic Feedback"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--    TODO: FOOTER - WRAPPER  -->
+    <com.google.android.material.card.MaterialCardView
+        android:clipChildren="true"
+        android:layout_weight="1"
+        app:cardBackgroundColor="#010101"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="54dp">
+        <HorizontalScrollView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+<!--                <Button-->
+<!--                    android:text="Button"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+<!--                <Button-->
+<!--                    android:text="Button"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+<!--                <Button-->
+<!--                    android:text="Button"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+<!--                <Button-->
+<!--                    android:text="Button"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

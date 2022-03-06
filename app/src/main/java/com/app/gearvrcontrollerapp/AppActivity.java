@@ -77,6 +77,10 @@ public class AppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app);
         mContext = this;
 
+        //  START INITIAL ACTIVITY
+        Intent myIntent = new Intent(this, InitialActivity.class);
+        startActivity(myIntent);
+
         checkOverlayPermission();
         stopService(new Intent(AppActivity.this, ControllerInputOverlayService.class));
         BroadcastReceiver mReceiver = new BroadcastReceiver() {

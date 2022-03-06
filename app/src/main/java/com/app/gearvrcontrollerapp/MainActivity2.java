@@ -50,6 +50,7 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -110,55 +111,37 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
 
-    private boolean isDarkMode(){
-        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                return true;
-            case Configuration.UI_MODE_NIGHT_NO:
-                return false;
-        }
-        return false;
+    private AppApplication getAppApplication(){
+        return (AppApplication) getApplication();
     }
+
 
     private void onThemeChange(){
         //  RE-APPLY ALL COLORS
         mParent.setBackgroundColor(Color.TRANSPARENT);//getColorBackground()
 
-        mTxtLinearTop.setTextColor(getColorText());
-        mTxtLinearTop.setBackground(getGradientColorBackground());
 
-        mTxtToolbar.setTextColor(getColorText());
+        mTxtLinearTop.setTextColor(getAppApplication().getColorText());
+        mTxtLinearTop.setBackground(getAppApplication().getGradientColorBackground());
 
-        mCardParent.setCardBackgroundColor(getColorBackground());
-        mLinearParentRoot.setBackgroundColor(getColorBackground());
+        mTxtToolbar.setTextColor(getAppApplication().getColorText());
+
+        mCardParent.setCardBackgroundColor(getAppApplication().getColorBackground());
+        mLinearParentRoot.setBackgroundColor(getAppApplication().getColorBackground());
 
         mBtnConnect.onThemeChange();
         mBtnDisconnect.onThemeChange();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int mStatusBar = (!isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : 0;
-            int mNavBar = (!isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR : 0;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            int mStatusBar = (!getAppApplication().isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : 0;
+            int mNavBar = (!getAppApplication().isDarkMode()) ? View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR : 0;
             getWindow().getDecorView().setSystemUiVisibility(mStatusBar|mNavBar);
         }
     }
 
-    private int getColorBackground(){
-        return (isDarkMode()) ? Color.parseColor("#010101") : Color.parseColor("#F2F2F2");
-    }
-    private int getColorSurface(){
-        return (isDarkMode()) ? Color.parseColor("#171717") : Color.parseColor("#FFFFFF");
-    }
-    private int getColorText(){
-        return (isDarkMode()) ? Color.parseColor("#FAFAFA") : Color.parseColor("#252525");
-    }
-    private int getColorSubText(){
-        return (isDarkMode()) ? Color.parseColor("#6A6A6A") : Color.parseColor("#919191");
-    }
 
-    private GradientDrawable getGradientColorBackground(){
-        int[] colors = {Color.TRANSPARENT,getColorBackground()};
-        return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-    }
+
+
 
 
 

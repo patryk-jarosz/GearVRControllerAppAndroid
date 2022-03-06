@@ -1,5 +1,6 @@
 package com.app.gearvrcontrollerapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -63,6 +64,10 @@ public class OneUICompCategoryView extends MaterialCardView {
         this.setRadius(getResources().getDimension(R.dimen.compOneUICardRadius));
 
         onThemeChange();
+
+        if(mStrDescription.isEmpty()){
+            mTxtDescription.setVisibility(GONE);
+        }
     }
 
 
@@ -88,35 +93,13 @@ public class OneUICompCategoryView extends MaterialCardView {
 
 
     public void onThemeChange(){
-        this.setCardBackgroundColor(getColorSurface());
+        this.setCardBackgroundColor(getAppApplication().getColorSurface());
 
-        mTxtTitle.setTextColor(getColorText());
-        mTxtDescription.setTextColor(getColorSubText());
-    }
-
-
-    private int getColorBackground(){
-        return (isDarkMode()) ? Color.parseColor("#010101") : Color.parseColor("#F2F2F2");
-    }
-    private int getColorSurface(){
-        return (isDarkMode()) ? Color.parseColor("#171717") : Color.parseColor("#FFFFFF");
-    }
-    private int getColorText(){
-        return (isDarkMode()) ? Color.parseColor("#FAFAFA") : Color.parseColor("#252525");
-    }
-    private int getColorSubText(){
-        return (isDarkMode()) ? Color.parseColor("#6A6A6A") : Color.parseColor("#919191");
+        mTxtTitle.setTextColor(getAppApplication().getColorText());
+        mTxtDescription.setTextColor(getAppApplication().getColorSubText());
     }
 
-    private boolean isDarkMode(){
-        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                return true;
-            case Configuration.UI_MODE_NIGHT_NO:
-                return false;
-        }
-        return false;
-    }
+
 
 
     interface OneUICompCategoryViewListener{
@@ -133,6 +116,10 @@ public class OneUICompCategoryView extends MaterialCardView {
                 self.clearFocus();
             }
         });
+    }
+
+    private AppApplication getAppApplication(){
+        return (AppApplication)((Activity) mContext).getApplication();
     }
 
 }

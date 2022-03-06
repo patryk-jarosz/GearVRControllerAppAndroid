@@ -5,4 +5,8 @@
 
 
     <dimen name="compOneUICardRadius">30dp</dimen>
+
+
+
+    <dimen name="appBorderRadius">25dp</dimen>
 </resources>

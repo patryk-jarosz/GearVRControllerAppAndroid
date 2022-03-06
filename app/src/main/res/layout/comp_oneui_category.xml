@@ -9,7 +9,9 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:minHeight="65dp"
+    >
 
     <!--    ICON    -->
     <com.google.android.material.imageview.ShapeableImageView
@@ -21,8 +23,8 @@
         android:layout_height="25dp"/>
     <!--    TEXT CONTAINER    -->
     <LinearLayout
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
