@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 
 import com.app.gearvrcontrollerapp.New.ControllerInputManager;
 import com.app.gearvrcontrollerapp.Utils.AppBluetoothUtil;
+import com.app.gearvrcontrollerapp.Utils.GearVREventDataParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,6 +72,9 @@ public class AppActivity extends AppCompatActivity {
     private Instrumentation mSystemInstrumentation;
 
     private AppBluetoothUtil mAppBluetoothUtil;
+
+    private GearVREventDataParser mGearVREventDataParser;
+    private AppBluetoothUtil.TargetDeviceDefinitionGearVRController mTargetDeviceDefinitionGearVRController;
 
     private void log(String message){ Log.v("AppActivity",message); }
 
@@ -125,8 +129,100 @@ public class AppActivity extends AppCompatActivity {
         mControllerInputDisplay.onMacAddress(MAC_ADDRESS);
         //
         //
+        mTargetDeviceDefinitionGearVRController = new AppBluetoothUtil.TargetDeviceDefinitionGearVRController();
+        mGearVREventDataParser = new GearVREventDataParser(new GearVREventDataParser.GearVREventDataParserListener(){
+            @Override
+            public void onTouchpadTouching(int[] posXY, boolean isInitial) {
 
-        mAppBluetoothUtil = new AppBluetoothUtil(mContext);
+            }
+
+            @Override
+            public void onTouchpadReleased() {
+
+            }
+
+            @Override
+            public void onClickTouchpad() {
+
+            }
+
+            @Override
+            public void onDownTrigger() {
+
+            }
+
+            @Override
+            public void onUpTrigger() {
+
+            }
+
+            @Override
+            public void onClickBack() {
+
+            }
+
+            @Override
+            public void onLongClickBack() {
+
+            }
+
+            @Override
+            public void onClickHome() {
+
+            }
+
+            @Override
+            public void onLongClickHome() {
+
+            }
+
+            @Override
+            public void onClickVolUp() {
+
+            }
+
+            @Override
+            public void onLongClickVolUp() {
+
+            }
+
+            @Override
+            public void onClickVolDown() {
+
+            }
+
+            @Override
+            public void onLongClickVolDown() {
+
+            }
+        });
+        mAppBluetoothUtil = new AppBluetoothUtil(
+                mContext,
+                mTargetDeviceDefinitionGearVRController,
+                new AppBluetoothUtil.AppBluetoothUtilListener() {
+                    @Override
+                    public void onConnected() {
+
+                    }
+
+                    @Override
+                    public void onDisconnected() {
+
+                    }
+
+                    @Override
+                    public void onError(int error) {
+                        Log.e("AppActivity","onError: " + error);
+                    }
+
+                    @Override
+                    public void onEventData(String characteristicUUID, byte[] eventData) {
+                        if(characteristicUUID.equals(mTargetDeviceDefinitionGearVRController.SERVICE_UUID)){
+                            //  NOTIFICATION
+                            mGearVREventDataParser.onEventData(eventData);
+                        }
+                    }
+                });
     }
 
     private static final String MAC_ADDRESS = "2C:BA:BA:2F:6C:8E";
